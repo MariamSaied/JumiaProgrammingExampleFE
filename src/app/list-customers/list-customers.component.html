@@ -2,17 +2,43 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
+<app-search-component></app-search-component>
 <section id="tabs" class="project-tab">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" *ngFor = "let country of countries">
                 <nav>
-                    <div class="nav nav-tabs nav-fill" role="tablist">
-                        <a  *ngFor = "let country of countries" class="nav-item nav-link" id ="nav-{{country.country_name}}" data-toggle="tab" href="#nav-{{country.country_name}}" role="tab" attr.aria-controls="nav-{{country.country_name}}-tab" aria-selected="true" >{{country.country_name}}</a>
+                    <div class="header">
+                        <h1>{{country.country_name}}</h1>
                     </div>
                 </nav>
-                <app-tab [countriesList] = "countries"> </app-tab>
+                <!-- <app-tab countriesList = "countries"> </app-tab> -->
+                <div class="tab-content" id="nav-tabContent" style="margin-top: 5px;">
+                    <div>
+                        <table class="table" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Phone Number</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>Country Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor = "let customer of country.customers">
+                                    <td>{{customer.id}}</td>
+                                    <td>{{customer.name}}</td>
+                                    <td>{{customer.phone_number}}</td>
+                                    <td>{{customer.state}}</td>
+                                    <td>{{customer.country_name}}</td>
+                                    <td>{{customer.country_code}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                </div>                
             </div>
         </div>
     </div>

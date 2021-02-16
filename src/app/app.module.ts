@@ -5,17 +5,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TabComponent } from './tab/tab.component';
 import { ListCustomersComponent } from './list-customers/list-customers.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { SearchComponentComponent } from './search-component/search-component.component';
+import { FormsModule} from '@angular/forms'
 @NgModule({
   declarations: [
     AppComponent,
     TabComponent,
-    ListCustomersComponent
+    ListCustomersComponent,
+    SearchComponentComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

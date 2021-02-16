@@ -1,5 +1,5 @@
-<div class="tab-content" id="nav-tabContent">
-    <div *ngFor = "let country of countriesList" class="tab-pane fade show active" id=`nav-${country.country_name}` role="tabpanel" aria-labelledby=`nav-${country.country_name}-tab`>
+<!-- <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id=`nav-${country.country_name}` role="tabpanel" aria-labelledby=`nav-${country.country_name}-tab`>
         <table class="table" cellspacing="0">
             <thead>
                 <tr>
@@ -11,8 +11,8 @@
                     <th>Customer Country Code</th>
                 </tr>
             </thead>
-            <tbody *ngFor = "let customer of country.customers">
-                <tr >
+            <tbody *ngFor = "let country of countriesList">
+                <tr *ngFor = "let customer of country.customers">
                     <td>{{customer.id}}</td>
                     <td>{{customer.name}}</td>
                     <td>{{customer.phone_number}}</td>
@@ -23,4 +23,4 @@
             </tbody>
         </table>
     </div> 
-</div>
+</div> -->

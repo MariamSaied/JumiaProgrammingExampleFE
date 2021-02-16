@@ -16,7 +16,7 @@ export class TabComponent implements OnInit {
   countriesList: Country[];
 
   ngOnInit(): void {
-    console.log(this.countriesList);
+    //console.log(this.countriesList);
     console.log("here");
   }
 
