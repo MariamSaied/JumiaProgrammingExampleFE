@@ -1,0 +1,26 @@
+<div class="tab-content" id="nav-tabContent">
+    <div *ngFor = "let country of countriesList" class="tab-pane fade show active" id=`nav-${country.country_name}` role="tabpanel" aria-labelledby=`nav-${country.country_name}-tab`>
+        <table class="table" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Customer Phone Number</th>
+                    <th>Customer State</th>
+                    <th>Customer Country</th>
+                    <th>Customer Country Code</th>
+                </tr>
+            </thead>
+            <tbody *ngFor = "let customer of country.customers">
+                <tr >
+                    <td>{{customer.id}}</td>
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.phone_number}}</td>
+                    <td>{{customer.state}}</td>
+                    <td>{{customer.country_name}}</td>
+                    <td>{{customer.country_code}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+</div>

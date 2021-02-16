@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
+import { ListCustomersComponent } from './list-customers/list-customers.component';  
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+export const routes: Routes = [  
+  { path: 'getCustomers', component: ListCustomersComponent, pathMatch: 'full' },  
+  //{ path: '/', component: AddEmpComponent }  
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

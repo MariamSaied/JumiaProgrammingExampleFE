@@ -1,0 +1,25 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<section id="tabs" class="project-tab">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" role="tablist">
+                        <a  *ngFor = "let country of countries" class="nav-item nav-link" id ="nav-{{country.country_name}}" data-toggle="tab" href="#nav-{{country.country_name}}" role="tab" attr.aria-controls="nav-{{country.country_name}}-tab" aria-selected="true" >{{country.country_name}}</a>
+                    </div>
+                </nav>
+                <app-tab [countriesList] = "countries"> </app-tab>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <span>All Rights Reserved 2021 @MariamSaied</span>
+    </div>
+</footer>
