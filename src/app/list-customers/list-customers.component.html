@@ -2,7 +2,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<app-search-component (filteredCustomers) ="doRefreshCountries($event)" ></app-search-component>
+<app-search-component (filteredCustomers) ="doRefreshCountries($event)" [page_number]="page_number"></app-search-component>
 <section id="tabs" class="project-tab" >
     <div class="container">
         <div class="row">
@@ -44,15 +44,16 @@
     </div>
 </section>
 <section *ngIf = "page_count">
-    <nav aria-label="Page navigation example" class="d-block mx-auto" style="padding-left: 40%;">
+    <p style="padding-left: 48%;" style="text-align: center;"><strong>Page: {{page_number}}</strong> </p>
+    <nav aria-label="Page navigation example" class="d-block mx-auto" style="padding-left: 40%; text-align: center; display: inline-block;" >
         <ul class="pagination">
-            <li class="page-item"><a class="page-link btn" style = "color:#1abc9c;" href="#">Previous</a></li>
-            <li class="page-item" *ngFor="let item of [].constructor(page_count); let i = index" ><a class="page-link btn" style = "color:#1abc9c;" href="#">{{i+1}}</a></li>
-            <li class="page-item"><a class="page-link btn" style = "color:#1abc9c;" href="#">Next</a></li>
+            <li class="page-item"><a class="page-link btn" style = "color:#1abc9c;" (click) = "getPreviousPage()">Previous</a></li>
+            <li class="page-item" *ngFor="let page of pages"><a class="page-link btn" style = "color:#1abc9c;" (click) = "getPage(page)">{{page}}</a></li>
+            <li class="page-item"><a class="page-link btn" style = "color:#1abc9c;" (click) = "getNextPage()">Next</a></li>
         </ul>
-      </nav>
+    </nav>
 </section>
-<footer class="footer">
+<footer class="footer" style="text-align: center; margin-bottom: 20px;">
     <div class="container">
         <span>All Rights Reserved 2021 @MariamSaied</span>
     </div>

@@ -7,7 +7,8 @@ import { ObjectInterface } from '../../Collections/ObjectInterface';
 import { Country } from 'src/Collections/Country';
 import { EventEmitter } from '@angular/core';
 import { SearchResponse } from 'src/Collections/SearchResponse';
-import { Customer } from 'src/Collections/Customer';
+import { Input, SimpleChanges } from '@angular/core';
+
 @Component({
   selector: 'app-search-component',
   templateUrl: './search-component.component.html',
@@ -24,8 +25,16 @@ export class SearchComponentComponent implements OnInit {
   filteredCountry: Country[] = [];
   searchResponse: SearchResponse;
   page_count: number = 0;
+  invalidPopUp:boolean = false;
 
-  @Output('filteredCustomers') filteredCustomers = new EventEmitter<{page_count: number, countries: Country[]}>();
+  prevStateSelected:boolean;
+  prevPerPageSelected:number;
+  prevCountrySelected:string;
+
+  @Input()
+  page_number:number = 1;
+
+  @Output('filteredCustomers') filteredCustomers = new EventEmitter<{page_count: number, countries: Country[],page_number_child:number}>();
   
   constructor(private customerService: CustomerServiceService,
     private router: Router) { }
@@ -37,19 +46,27 @@ export class SearchComponentComponent implements OnInit {
   reloadCountries() {
     this.customerService.getCountries().subscribe((data:CountryHash) =>{
       Object.keys(data).forEach(key => {
-        console.log(key);
-        console.log(data[key])
-          this.countries.push({country_name:data[key],code:key})
+        this.countries.push({country_name:data[key],code:key})
       });
       });
   }
 
   notifyParentComponent(){
-    console.log("done modify")
-    console.log(this.filteredCountry)
-    this.filteredCustomers.emit({page_count: this.page_count, countries: this.filteredCountry});
+    this.filteredCustomers.emit({page_count: this.page_count, countries: this.filteredCountry,page_number_child:this.page_number});
   }
-  getCustomersByCriteria(){
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(this.page_number && changes.page_number){
+      if (changes.page_number.currentValue != changes.page_number.previousValue )
+      {
+        this.page_number = changes.page_number.currentValue;
+        this.getCustomersByCriteria(this.page_number);    
+  
+      }
+    }
+  }
+
+  getCustomersByCriteria(page_number:number){
     let filter:ObjectInterface = {};
     this.filteredCountry = [];
     if(this.PerPageSelected) filter.per_page = this.PerPageSelected;
@@ -65,39 +82,32 @@ export class SearchComponentComponent implements OnInit {
         filter.search_type = {search_type:"BY_COUNTRY_STATE"}
       }
     }
-    filter.page_number = 1;
+    if(page_number != 0) filter.page_number = page_number;
+    else{
+      this.page_number = 1;
+      filter.page_number = 1;
+    }
     
     this.customerService.filter(filter).subscribe( searchResponseObs =>{
-      console.log(searchResponseObs);
       this.page_count = searchResponseObs.page_count;
       searchResponseObs.page_customers.forEach(customer => {
         if(this.filteredCountry.length == 0){
           this.filteredCountry.push({country_name:customer.country_name,customers:[customer]});
-          console.log("here")
-          console.log({country_name:customer.country_name,customers:[customer]})
         }else{
           let countryPresent = this.filteredCountry.filter(country => country.country_name == customer.country_name);
-          console.log(countryPresent)
           if(countryPresent.length == 0){
             this.filteredCountry.push({country_name:customer.country_name,customers:[customer]})
-            console.log("down_here")
-            console.log({country_name:customer.country_name,customers:[customer]})
           }else{
             this.filteredCountry.find(country => country.country_name == customer.country_name)?.customers.push(customer);
-            // countryPresent[0].customers.push(customer);
-            // console.log(countryPresent[0].customers)
           }
         }
       });
-      console.log("filtered")
-      console.log(this.filteredCountry)
       this.notifyParentComponent();
     });
     
   }
 
   setState(state:any){
-    console.log("state: " + state)
     this.StateSelected = state;
   }
 
@@ -110,7 +120,9 @@ export class SearchComponentComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.CountrySelected)
-    this.getCustomersByCriteria();
+    if(!this.CountrySelected && !this.StateSelected){
+      this.invalidPopUp = true;
+    }
+    else this.getCustomersByCriteria(0);
   }
 }

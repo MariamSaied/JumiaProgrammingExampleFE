@@ -4,22 +4,27 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
 import { CustomerServiceService } from '../customer-service.service';
 import { Router } from '@angular/router';
-import { Input } from '@angular/core';
+import { Input} from '@angular/core';
+
 @Component({
   selector: 'app-list-customers',
   templateUrl: './list-customers.component.html',
   styleUrls: ['./list-customers.component.css']
 })
 export class ListCustomersComponent implements OnInit {
-  // countries: Country[];
-  constructor(private customerService: CustomerServiceService,
-    private router: Router) { }
+    
+  page_number:number = 1;
 
   @Input()
   countries: Country[];
 
   @Input()
-  page_count: number = 3;
+  page_count: number = 0;
+
+  pages:number[];
+
+  constructor(private customerService: CustomerServiceService,
+  private router: Router) { }
 
   ngOnInit(): void {
     this.reloadData();
@@ -29,22 +34,24 @@ export class ListCustomersComponent implements OnInit {
     this.customerService.getCustomersList().subscribe((countries:Country[]) =>{ this.countries = countries});
   }
 
-  getFilteredCustomers(filteredCustomers:{page_count: number, countries: Country[]}){
-    if(filteredCustomers){
-      console.log("filtered customers countries count: ", filteredCustomers.countries.length)
-      this.countries = filteredCustomers.countries;
-      this.page_count = filteredCustomers.page_count;
-    }
-  }
-
-  doRefreshCountries(filteredCountries:any) {
-    console.log("got refreshed")
+  doRefreshCountries(filteredCustomers:{page_count: number, countries: Country[],page_number_child:number}) {
     this.countries = [];
-    this.countries = filteredCountries;
+    this.countries = filteredCustomers.countries;
+    this.page_count = filteredCustomers.page_count;
+    this.pages = Array.from(new Array(this.page_count), (x,i) => i+1);
+    this.page_number = filteredCustomers.page_number_child;
   }
 
-  requestPage(){
-    
+  getPreviousPage(){
+    this.page_number = this.page_number - 1;
+  }
+
+  getNextPage(){
+    this.page_number = this.page_number + 1;
+  }
+
+  getPage(index:number){
+    this.page_number = index;
   }
 
 }
