@@ -6,25 +6,26 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                            <select class="form-control search-slt" id="exampleFormControlSelect1 " [(ngModel)] = 'StateSelected' (ngModelChange) = 'setState($event)'>
-                                <option value="" disabled selected>Select State..</option>
-                                <option *ngFor = "let state of states" [value]= "state">{{state}}</option>
+                            <select class="form-control search-slt" id="exampleFormControlSelect1 " name ="exampleFormControlSelect1 " [(ngModel)] = 'StateSelected' (ngModelChange) = 'setState($event)'>
+                                <option [value]= "undefined" name = "undefined" selected>Select State..</option>
+                                <option  [value]= "true" name = "true">Valid</option>
+                                <option  [value]= "false" name = "false">Not Valid</option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                            <select class="form-control search-slt" id="exampleFormControlSelect1" [(ngModel)] = 'PerPageSelected' (ngModelChange) = 'setPerPage($event)'>
+                            <select class="form-control search-slt" id="exampleFormControlSelect1" name = "exampleFormControlSelect2" [(ngModel)] = 'PerPageSelected' (ngModelChange) = 'setPerPage($event)'>
                                 <option value="" disabled selected>Per Page..</option>
-                                <option *ngFor = "let number of per_page_count" [value]= "number">{{number}}</option>
+                                <option *ngFor = "let number of per_page_count" [ngValue]= "number">{{number}}</option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                            <select class="form-control search-slt" id="exampleFormControlSelect1" [(ngModel)] = 'CountrySelected' (ngModelChange) = 'setCountry($event)'>
+                            <select class="form-control search-slt" id="exampleFormControlSelect1" name ="exampleFormControlSelect3" [(ngModel)] = 'CountrySelected' (ngModelChange) = 'setCountry($event)'>
                                 <option value="" disabled selected>Select Country..</option>
-                                <option *ngFor = "let country of countries" [value]= "country.code">{{country.country_name}}</option>
+                                <option *ngFor = "let country of countries" [ngValue]= "country.code">{{country.country_name}}</option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                            <button type="button" class="btn btn-danger wrn-btn" (click) = "onSubmit($event)">Search</button>
+                            <button type="button" class="btn btn-danger wrn-btn" (click) = "onSubmit()">Search</button>
                         </div>
                     </div>
                 </div>
@@ -32,5 +33,3 @@
         </form>
     </div>
 </section>
-
-<P>{{PerPageSelected}}</P>

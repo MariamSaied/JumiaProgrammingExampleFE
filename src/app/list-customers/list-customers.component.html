@@ -2,11 +2,11 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<app-search-component></app-search-component>
-<section id="tabs" class="project-tab">
+<app-search-component (filteredCustomers) ="doRefreshCountries($event)" ></app-search-component>
+<section id="tabs" class="project-tab" >
     <div class="container">
         <div class="row">
-            <div class="col-md-12" *ngFor = "let country of countries">
+            <div class="col-md-12" *ngFor = "let country of countries" >
                 <nav>
                     <div class="header">
                         <h1>{{country.country_name}}</h1>
@@ -43,7 +43,15 @@
         </div>
     </div>
 </section>
-
+<section *ngIf = "page_count">
+    <nav aria-label="Page navigation example" class="d-block mx-auto" style="padding-left: 40%;">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link btn" style = "color:#1abc9c;" href="#">Previous</a></li>
+            <li class="page-item" *ngFor="let item of [].constructor(page_count); let i = index" ><a class="page-link btn" style = "color:#1abc9c;" href="#">{{i+1}}</a></li>
+            <li class="page-item"><a class="page-link btn" style = "color:#1abc9c;" href="#">Next</a></li>
+        </ul>
+      </nav>
+</section>
 <footer class="footer">
     <div class="container">
         <span>All Rights Reserved 2021 @MariamSaied</span>
